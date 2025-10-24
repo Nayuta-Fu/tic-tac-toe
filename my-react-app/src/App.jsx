@@ -7,7 +7,7 @@ function Square({ value, onSquareClick }) {
   </button>);
 }
 
-function Board() {
+function Board({ xInNext, squares, onPlay }) {
   const [xInNext, setXInNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
 
@@ -37,10 +37,13 @@ function Board() {
     }
     const nextSquares = squares.slice();
     if(xInNext){
-    nextSquares[i] = "X";
-  } else {
-    nextSquares[i] = "O";
-  }
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O";
+    }
+    onPlay(nextSquares);
+  
+
   setSquares(nextSquares);
   setXInNext(!xInNext);
   }
@@ -84,11 +87,12 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xInNext={xInNext} squares={currentSquares onPlay={handlePlay} />
+        <Board xInNext={xInNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
         <ol>{/* TODO */}</ol>
       </div>
     </div>
   );
+};
 }
